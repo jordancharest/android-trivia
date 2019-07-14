@@ -2,14 +2,13 @@ package com.example.android.navigation
 
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.FragmentTitleBinding
 
 /**
@@ -30,6 +29,22 @@ class TitleFragment : Fragment() {
         binding.playButton.setOnClickListener(
                 Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment))
 
+
+        // set that we have an options menu available
+        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    // inflate the menu resource when the menu is created by overriding the default
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.overflow_menu, menu)
+    }
+
+    // need to override to allow the nav controller to navigate where we want when the menu option is selected
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return NavigationUI.onNavDestinationSelected(item!!,
+                view!!.findNavController())
+                || super.onOptionsItemSelected(item)
     }
 }
