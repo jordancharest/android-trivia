@@ -26,8 +26,14 @@ class TitleFragment : Fragment() {
 //            view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)
 //        }
 
-        binding.playButton.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment))
+        // this is the preferred way if we are not using the safeargs gradle plugin
+//        binding.playButton.setOnClickListener(
+//                Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment))
+
+        // but if we are using the safeargs gradle plugin, this is the way to do it, since we must use an anonymous function
+        binding.playButton.setOnClickListener { view: View ->
+            view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+        }
 
 
         // set that we have an options menu available
